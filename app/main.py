@@ -24,3 +24,5 @@ def create_book_for_user(
 def read_books(skip: int = 0, limit: int = 10, db: Session = Depends(auth.get_db)):
     books = crud.get_books(db, skip=skip, limit=limit)
     return books
+
+# Mikolaj
