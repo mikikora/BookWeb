@@ -1,6 +1,12 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from .database import Base
+
+book_tag_association = Table(
+    'book_tag_association', Base.metadata,
+    Column('book_id', Integer, ForeignKey('books.id')),
+    Column('tag_id', Integer, ForeignKey('tags.id'))
+)
 
 class User(Base):
     __tablename__ = "users"
@@ -22,3 +28,14 @@ class Book(Base):
     comment = Column(String)
 
     owner = relationship("User", back_populates="books")
+    tags = relationship("Tag", secondary=book_tag_association, back_populates="books")
+
+class Tag(Base):
+    __tablename__ = "tags"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True, unique=True)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+
+    owner = relationship("User")
+    books = relationship("Book", secondary=book_tag_association, back_populates="tags")
