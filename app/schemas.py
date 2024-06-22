@@ -1,9 +1,18 @@
 from pydantic import BaseModel
+from typing import Optional
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
 
 class BookBase(BaseModel):
     title: str
     author: str
     rating: int
+    comment: str
 
 class BookCreate(BookBase):
     pass

@@ -19,5 +19,6 @@ class Book(Base):
     author = Column(String, index=True)
     rating = Column(Integer)
     owner_id = Column(Integer, ForeignKey("users.id"))
+    comment = Column(String)
 
     owner = relationship("User", back_populates="books")
