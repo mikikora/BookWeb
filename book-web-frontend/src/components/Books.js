@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Books.css';
 
 const Books = () => {
@@ -14,25 +15,39 @@ const Books = () => {
   const [comment, setComment] = useState('');
   const [newTag, setNewTag] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
+  const [filterTags, setFilterTags] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Brak tokena');
+        }
         const response = await axios.get('/books/', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setBooks(response.data);
+        setFilteredBooks(response.data);
       } catch (error) {
         alert('Failed to fetch books!');
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        }
       }
     };
 
     const fetchTags = async () => {
       try {
         const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Brak tokena');
+        }
         const response = await axios.get('/tags/', {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,12 +56,16 @@ const Books = () => {
         setTags(response.data);
       } catch (error) {
         alert('Failed to fetch tags!');
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        }
       }
     };
 
     fetchBooks();
     fetchTags();
-  }, []);
+  }, [navigate]);
 
   const handleAddBook = async (event) => {
     event.preventDefault();
@@ -64,7 +83,9 @@ const Books = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setBooks([...books, response.data]);
+      const updatedBooks = [...books, response.data];
+      setBooks(updatedBooks);
+      setFilteredBooks(updatedBooks);
       setTitle('');
       setAuthor('');
       setRating('');
@@ -93,7 +114,9 @@ const Books = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setBooks(books.map(book => book.id === currentBook.id ? response.data : book));
+      const updatedBooks = books.map(book => book.id === currentBook.id ? response.data : book);
+      setBooks(updatedBooks);
+      setFilteredBooks(updatedBooks);
       setTitle('');
       setAuthor('');
       setRating('');
@@ -141,6 +164,24 @@ const Books = () => {
       setSelectedTags(selectedTags.filter(tag => tag !== tagName));
     } else {
       setSelectedTags([...selectedTags, tagName]);
+    }
+  };
+
+  const handleFilterTagChange = (tagName) => {
+    let updatedFilterTags;
+    if (filterTags.includes(tagName)) {
+      updatedFilterTags = filterTags.filter(tag => tag !== tagName);
+    } else {
+      updatedFilterTags = [...filterTags, tagName];
+    }
+    setFilterTags(updatedFilterTags);
+
+    if (updatedFilterTags.length === 0) {
+      setFilteredBooks(books);
+    } else {
+      setFilteredBooks(books.filter(book =>
+        book.tags.some(tag => updatedFilterTags.includes(tag.name))
+      ));
     }
   };
 
@@ -204,11 +245,24 @@ const Books = () => {
             {editMode ? 'Zaktualizuj książkę' : 'Dodaj książkę'}
           </button>
         </form>
-      )}
-      <br></br>
+      )}<br></br>
       <button onClick={() => setShowForm(!showForm)} className="toggle-form-button">
         {showForm ? 'Schowaj formularz' : 'Dodaj nową pozycję'}
-      </button>
+      </button><br></br>
+      <div className="filter-tags-container">
+        <h4>Filtruj po tagach</h4>
+        {tags.map((tag) => (
+          <label key={tag.id} className="tag-checkbox">
+            <input
+              type="checkbox"
+              value={tag.name}
+              checked={filterTags.includes(tag.name)}
+              onChange={() => handleFilterTagChange(tag.name)}
+            />
+            {tag.name}
+          </label>
+        ))}
+      </div>
       <div className="add-tag-form">
         <h4>Dodaj nowy tag</h4>
         <form onSubmit={handleAddTag}>
@@ -218,11 +272,11 @@ const Books = () => {
             onChange={(e) => setNewTag(e.target.value)}
             required
           /><br></br>
-          <button type="submit" className="add-tag-button">Dodaj tag</button>
+          <button type="submit" className="auth-button">Dodaj tag</button>
         </form>
       </div>
       <ul className="books-list">
-        {books.map((book) => (
+        {filteredBooks.map((book) => (
           <li key={book.id} className="book-item">
             <h3>{book.title}</h3>
             <p>Autor: {book.author}</p>

@@ -8,7 +8,7 @@ const Home = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/books');
+      navigate('/PrivateRoute');
     }
   }, [navigate]);
 

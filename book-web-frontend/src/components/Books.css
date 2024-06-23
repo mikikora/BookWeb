@@ -24,7 +24,7 @@
     background-color: #0056b3;
   }
   
-  .book-form {
+  .book-form, .add-tag-form, .filter-tags-container {
     display: inline-block;
     text-align: left;
     max-width: 400px;
@@ -32,12 +32,12 @@
     margin-bottom: 40px;
   }
   
-  .book-form label {
+  .book-form label, .add-tag-form label, .filter-tags-container label {
     display: block;
     margin-bottom: 10px;
   }
   
-  .book-form input {
+  .book-form input, .add-tag-form input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -57,19 +57,6 @@
     border-radius: 5px;
     text-decoration: none;
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  .add-tag-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    width: 10%;
     box-sizing: border-box;
   }
   
@@ -118,27 +105,13 @@
     background-color: #218838;
   }
   
-  .tags-container {
+  .tags-container, .filter-tags-container {
     margin-bottom: 20px;
   }
   
   .tag-checkbox {
     display: block;
     margin-bottom: 10px;
-  }
-  
-  .add-tag-form {
-    margin-bottom: 40px;
-  }
-  
-  .add-tag-form input {
-    width: 10%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
   }
   
   .tags-list {
