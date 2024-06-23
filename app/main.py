@@ -33,8 +33,12 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(auth.get_db)):
 
 @app.get("/users/", response_model=list[schemas.User])
 def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(auth.get_db)):
-    books = crud.get_users(db, skip=skip, limit=limit)
-    return books
+    users = crud.get_users(db, skip=skip, limit=limit)
+    return users
+
+@app.get("/user/", response_model=schemas.User)
+def get_user(db: Session = Depends(auth.get_db), current_user: schemas.User = Depends(auth.get_current_user)):
+    return crud.get_user(db, current_user.id)
 
 @app.put("/users/change-password", response_model=schemas.User)
 def change_password(password_data: schemas.ChangePassword, db: Session = Depends(auth.get_db), current_user: schemas.User = Depends(auth.get_current_user)):
