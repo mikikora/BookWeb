@@ -1,0 +1,156 @@
+.books-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .books-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-form-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-bottom: 20px;
+  }
+  
+  .toggle-form-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .book-form {
+    display: inline-block;
+    text-align: left;
+    max-width: 400px;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  
+  .book-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .book-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .auth-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .add-tag-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 10%;
+    box-sizing: border-box;
+  }
+  
+  .auth-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .books-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .book-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .book-item h3 {
+    margin-top: 0;
+  }
+  
+  .book-item p {
+    margin: 5px 0;
+  }
+  
+  .edit-button {
+    padding: 5px 10px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  
+  .edit-button:hover {
+    background-color: #218838;
+  }
+  
+  .tags-container {
+    margin-bottom: 20px;
+  }
+  
+  .tag-checkbox {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .add-tag-form {
+    margin-bottom: 40px;
+  }
+  
+  .add-tag-form input {
+    width: 10%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .tags-list {
+    margin-top: 10px;
+  }
+  
+  .tag-item {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 3px;
+  }
+  

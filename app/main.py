@@ -55,9 +55,9 @@ def create_book_for_user(
 ):
     tags = []
     for tag_data in book.tags:
-        tag = crud.get_tag_by_name(tag_data.name)
+        tag = crud.get_tag_by_name(db, tag_data.name)
         if not tag:
-            tag = crud.create_tag(tag)
+            tag = crud.create_tag(db, tag_data, current_user.id)
         tags.append(tag)
     return crud.create_user_book(db=db, book=book, user_id=current_user.id, tags=tags)
 

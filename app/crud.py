@@ -50,7 +50,7 @@ def get_book(db: Session, book_id: int):
     return db.query(models.Book).filter(models.Book.id == book_id).first()
 
 def create_user_book(db: Session, book: schemas.BookCreate, user_id: int, tags: List[schemas.Tag]):
-    db_book = models.Book(**book.dict(), owner_id=user_id, tags=tags)
+    db_book = models.Book(title=book.title, author=book.author, rating=book.rating, comment=book.comment, owner_id=user_id, tags=tags)
     db.add(db_book)
     db.commit()
     db.refresh(db_book)
